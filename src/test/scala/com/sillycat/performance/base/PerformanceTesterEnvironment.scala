@@ -5,9 +5,7 @@ import com.typesafe.config.ConfigFactory
 trait PerformanceTesterEnvironment {
 
   val config = ConfigFactory.load
-
   val env = "env." + config.getString("build.env")
-
   private def path(s: String*) = s.mkString(".")
 
   def envStr(s: String): String = {
@@ -15,12 +13,8 @@ trait PerformanceTesterEnvironment {
   }
 
   val rampSeconds = 1
-
   val rampNumOfUsers = config.getInt(envStr("ramp.user.num"))
-
   val requestsPerUser = config.getInt(envStr("requests.per.user"))
-
-  val classifierHost = config.getString(envStr("classifier.host"))
-
+  val epjHost = config.getString(envStr("epj.host"))
 
 }
