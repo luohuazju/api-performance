@@ -1,5 +1,6 @@
-.bsp/
-.idea/
-target/
+sbt-api-performance/project/target
+sbt-api-performance/.bsp/
+sbt-api-performance/.idea/
+sbt-api-performance/target/
 *.class
 *.log
