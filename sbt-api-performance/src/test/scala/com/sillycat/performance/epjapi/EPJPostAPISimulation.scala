@@ -4,7 +4,8 @@ import com.sillycat.performance.base.PerformanceTesterEnvironment
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 
-class EPJGetAPISimulation extends Simulation with PerformanceTesterEnvironment {
+
+class EPJPostAPISimulation extends Simulation with PerformanceTesterEnvironment{
 
   val httpConf = http
     .baseUrl(epjHost)
@@ -22,18 +23,20 @@ class EPJGetAPISimulation extends Simulation with PerformanceTesterEnvironment {
 
   val jobTitleDescJSONFeed = jsonFile("data/job.title.age.json").random
 
-  val performanceGetWithQuery = exec(http("performanceGetWithQuery")
-    .get("/api/v1/performance/get")
+  val performancePostJson = exec(http("performancePostJson")
+    .post("/api/v1/performance/post")
     .headers(headers)
-    .queryParamMap(Map("title"->"${title}","age" -> "${age}"))
+    .body(StringBody("""{
+                           "title": "${title}",
+                           "age": ${age}
+                       } """))
     .check(status.is(200))
     .check(bodyString.exists))
 
-  val multiScn = scenario("EPJ Get")
-    .repeat(requestsPerUser){ feed(jobTitleDescJSONFeed).exec(performanceGetWithQuery) }
+  val multiScn = scenario("EPJ POST")
+    .repeat(requestsPerUser){ feed(jobTitleDescJSONFeed).exec(performancePostJson) }
 
   setUp(
     multiScn.inject(rampUsers(rampNumOfUsers).during(5))
   ).protocols(httpConf)
-
 }

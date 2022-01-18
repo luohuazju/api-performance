@@ -7,22 +7,22 @@ Scala Gatling to Verify Performance
 sbt clean compile package
 ```
 
-```shell
-sbt test -Dbuild.env=stage
-```
-
 
 # First Testing #
 
 ```shell
 sbt -Dbuild.env=local "Gatling/testOnly com.sillycat.performance.epjapi.EPJGetAPISimulation"
-sbt -Dbuild.env=local "testOnly com.sillycat.performance.epjapi.ClassifierPostIndustrySimulation"
+sbt -Dbuild.env=local "Gatling/testOnly com.sillycat.performance.epjapi.EPJPostAPISimulation"
 ```
 
+#Run all #
+```shell
+sbt -Dbuild.env=local "Gatling/test"
+```
 
 # For Production #
 ```shell
-sbt -Dbuild.env=prod "testOnly com.j2c.performance.classifier.ClassifierPostIndustrySimulation"
+sbt -Dbuild.env=prod "Gatling/testOnly com.sillycat.performance.epjapi.EPJGetAPISimulation"
 ```
 
 
