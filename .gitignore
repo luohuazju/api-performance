@@ -1,3 +1,5 @@
+mvn-api-performance/.idea
+mvn-api-performance/target
 sbt-api-performance/project/project
 sbt-api-performance/project/target
 sbt-api-performance/.bsp/
