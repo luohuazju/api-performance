@@ -1,3 +1,7 @@
+gradle-api-performance/.gradle/
+gradle-api-performance/.idea/
+gradle-api-performance/build/
+gradle-api-performance/gradle/
 mvn-api-performance/.idea
 mvn-api-performance/target
 sbt-api-performance/project/project

@@ -1,0 +1,10 @@
+plugins {
+    id 'scala'
+    id 'io.gatling.gradle' version '3.7.6.2'
+}
+
+gatling {
+  logLevel = 'WARN' // logback root level
+  logHttp = 'NONE' // set to 'ALL' for all HTTP traffic in TRACE, 'FAILURES' DEBUG
+}
+
