@@ -16,5 +16,6 @@ trait PerformanceTesterEnvironment {
   val rampNumOfUsers = config.getInt(envStr("ramp.user.num"))
   val requestsPerUser = config.getInt(envStr("requests.per.user"))
   val epjHost = config.getString(envStr("epj.host"))
+  val kotlinStarterHost = config.getString(envStr("kotlinstarter.host"))
 
 }
