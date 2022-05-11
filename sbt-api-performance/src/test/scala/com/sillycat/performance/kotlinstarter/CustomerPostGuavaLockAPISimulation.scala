@@ -6,7 +6,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import scala.util.Random
 
-class CustomerPostLockAPISimulation extends Simulation with PerformanceTesterEnvironment {
+class CustomerPostGuavaLockAPISimulation extends Simulation with PerformanceTesterEnvironment {
 
   val httpConf = http
     .baseUrl(kotlinStarterHost)
@@ -24,15 +24,15 @@ class CustomerPostLockAPISimulation extends Simulation with PerformanceTesterEnv
 
   val feederRandom = Iterator.continually {
     Map(
-      "id" -> s"${Random.alphanumeric.take(20).mkString}",
+      "id" -> s"${Random.alphanumeric.take(25).mkString}",
       "firstName" -> s"${Random.alphanumeric.take(5).mkString}",
       "lastName" -> s"${Random.alphanumeric.take(5).mkString}",
       "status" -> "ACTIVE"
     )
   }
 
-  val customerPostLock = exec(http("customerPostLock")
-    .post("/customers/lock")
+  val customerPostGuavaLock = exec(http("customerPostGuavaLock")
+    .post("/customers/guavalock")
     .headers(headers)
     .body(StringBody("""{
                            "id": "${id}",
@@ -43,8 +43,8 @@ class CustomerPostLockAPISimulation extends Simulation with PerformanceTesterEnv
     .check(status.is(200))
     .check(bodyString.exists))
 
-  val multiScn = scenario("Kotlin Starter with Lock")
-    .repeat(requestsPerUser){ feed(feederRandom).exec(customerPostLock) }
+  val multiScn = scenario("Kotlin Starter with Guava Lock")
+    .repeat(requestsPerUser){ feed(feederRandom).exec(customerPostGuavaLock) }
 
   setUp(
     multiScn.inject(rampUsers(rampNumOfUsers).during(5))

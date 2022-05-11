@@ -1,11 +1,12 @@
 package com.sillycat.performance.kotlinstarter
 
 import com.sillycat.performance.base.PerformanceTesterEnvironment
+
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import scala.util.Random
 
-class CustomerPostNoLockAPISimulation extends Simulation with PerformanceTesterEnvironment {
+class CustomerPostConcurrentLockAPISimulation extends Simulation with PerformanceTesterEnvironment {
 
   val httpConf = http
     .baseUrl(kotlinStarterHost)
@@ -30,8 +31,8 @@ class CustomerPostNoLockAPISimulation extends Simulation with PerformanceTesterE
     )
   }
 
-  val customerPostNoneLock = exec(http("customerPostNoneLock")
-    .post("/customers/free")
+  val customerPostConcurrentLock = exec(http("customerPostConcurrentLock")
+    .post("/customers/concurrentlock")
     .headers(headers)
     .body(StringBody("""{
                            "id": "${id}",
@@ -42,8 +43,8 @@ class CustomerPostNoLockAPISimulation extends Simulation with PerformanceTesterE
     .check(status.is(200))
     .check(bodyString.exists))
 
-  val multiScn = scenario("Kotlin Starter NON Lock")
-    .repeat(requestsPerUser){ feed(feederRandom).exec(customerPostNoneLock) }
+  val multiScn = scenario("Kotlin Starter with Concurrent Lock")
+    .repeat(requestsPerUser){ feed(feederRandom).exec(customerPostConcurrentLock) }
 
   setUp(
     multiScn.inject(rampUsers(rampNumOfUsers).during(5))
